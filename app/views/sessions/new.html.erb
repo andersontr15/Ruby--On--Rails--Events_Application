@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title></title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+</head>
+<body>
+	<div class="container">
+	<h4>Login</h4>
+	<% if flash[:error2] -%>
+	  <p class='error'><%=h flash[:error2] %></p>
+	<% end %>
+		<form action="/sessions" method="post">
+			<input type="hidden" name="authenticity_token" value="<%=form_authenticity_token%>">
+			Email:<input type="email" name="email">
+			<br>
+			Password: <input type="password" name="password">
+			<input type="submit" value="Login">
+		</form>
+	</div>
+</body>
+</html>

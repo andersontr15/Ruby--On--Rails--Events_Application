@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title></title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+	<style>
+	div.messages{
+		height: 300px;
+		width:300px;
+		border: 5px solid black;
+		overflow:auto;
+	}
+	</style>
+</head>
+<body>
+<div class="container">
+<a href="/events">User Dashboard</a>
+<span>|</span>
+<% if current_user.id == @event.user.id %>
+  <td><a href="/events/<%=@event.id%>/edit">Edit</a></td>
+<% if current_user %>
+<form action='/sessions' method='post'>
+    <input type='hidden' name='authenticity_token' value='<%= form_authenticity_token %>'>
+    <input type='hidden' name='_method' value='delete'>
+    <input type='submit' value='Log Out'>
+  </form>
+<% end %>
+<% end %>
+<hr>
+<h3><%= @event.name %></h3>
+<br>
+Host:<%= @event.user.first_name %>
+<br>
+Date: <%= @event.timing.strftime("%m/%d/%Y") %>
+<br>
+Location: <%= @event.location %>
+<br>
+People Joining the event: <%= @joins.count %>
+<table class="table class table-bordered table-striped table-hovered table-hover">
+	<thead>
+		<tr>
+			<th>Name</th>
+			<th>Location</th>
+			<th>State</th>
+		</tr>
+	</thead>
+	<tbody>
+<% @joins.each do |j| %>
+		<tr>
+			<td><%=j.user.first_name %></td>
+			<td><%=j.user.location%></td>
+			<td><%=j.user.state%></td>
+		</tr>
+	</tbody>
+	<% end %>
+</table>
+
+<h3>Discussion about this event</h3>
+<div class="messages">
+<%@comments.each do |c| %>
+	<%= c.created_at.strftime("%m/%d/%Y") %> -- <%= c.user.first_name%> says: <%= c.comment %> 
+	<br>
+<% end %>
+</div>
+ 
+<form action="/comments" method="post">
+	<input type="hidden" name="authenticity_token" value="<%=form_authenticity_token%>">
+	<input type="hidden" name="id" value="<%=@event.id%>">
+	<input type="hidden" name="name" value="<%=@event.user.first_name %>">
+	<input type="text" name="comment">
+	<input type="submit" value="Add Comment">
+</form>
+</body>
+</div>
+</html>

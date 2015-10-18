@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title></title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container">
+<% if current_user %>
+  <form action='/sessions' method='post'>
+    <input type='hidden' name='authenticity_token' value='<%= form_authenticity_token %>'>
+    <input type='hidden' name='_method' value='delete'>
+    <input type='submit' value='Log Out'>
+  </form>
+<% end %>
+<a href="/events">Back To Dashboard</a>
+<br>
+Editing <%=current_user.first_name%>'s Profile 
+<hr>
+
+	<form action="/users/<%=current_user.id%>" method="post">
+		<input type="hidden" name="_method" value="patch">
+		<input type="hidden" name="authenticity_token" value="<%=form_authenticity_token%>">
+		First Name:<input type="text" name="first_name" value="<%=current_user.first_name%>">
+		<br>
+		Last Name:<input type="text" name="last_name" value="<%=current_user.last_name%>">
+		<br>
+		Email:<input type="text" name="email" value="<%=current_user.email%>">
+		<br>
+		Location:<input type="text" name="location" value="<%=current_user.location%>">
+		<br>
+		State:<select name="state">
+			<option value="<%=current_user.state%>"><%=current_user.state%></option>
+			<% if current_user.state == "CA" %>
+			<option value="WA">WA</option>
+			<option value="AZ">AZ</option>
+			<% elsif current_user.state == "WA"%>
+			<option value="CA">CA</option>
+			<option value="AZ">AZ</option>
+			<% elsif current_user.state == "AZ" %>
+			<option value="WA">WA</option>
+			<option value="CA">CA</option>
+			<% end %>
+		</select>
+		<br>
+		<input type="submit" value="Update">
+	</form>
+	</div>
+</body>
+</html>

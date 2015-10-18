@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title></title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+</head>
+<body>
+
+<div class="container">
+
+<% if current_user %>
+  <form action='/sessions' method='post'>
+    <input type='hidden' name='authenticity_token' value='<%= form_authenticity_token %>'>
+    <input type='hidden' name='_method' value='delete'>
+    <input type='submit' value='Log Out'>
+  </form>
+<% end %>
+<a href="/users/<%=current_user.id%>">Edit Profile</a>
+<hr>
+
+	<h3>Welcome, <%=current_user.first_name%> <%= current_user.last_name %></h3>
+<hr>
+<h4>Here are some of the events in your state:</h4>
+	<table class="table class table-bordered table-striped table-hovered table-hover">
+		<thead>
+			<tr>
+				<th>Name</th>
+				<th>Date</th>
+				<th>Location</th>
+				<th>State</th>
+				<th>Host</th>
+				<th>Action/Status</th>
+			</tr>
+		</thead>
+		<tbody>
+		<% @events.each do |e| %>
+			<% if e.state == current_user.state %>
+				<td>
+				
+				<a href="/events/<%=e.id %>"><%=e.name %></td>
+
+				<td><%=e.timing.strftime("%m/%d/%Y")%></td>
+				<td><%=e.location%></td>
+				<td><%= e.state %></td>
+				<td><%=e.user.first_name%></td>
+				<% if  e.user.id == current_user.id   %>
+				<td><a href="/events/<%=e.id%>/edit">Edit</a><form action="/events/<%=e.id%>" method="post">
+					<input type="hidden" name="_method" value="delete">
+					<input type="hidden" name="authenticity_token" value="<%=form_authenticity_token%>">
+					<input type="submit" value="Delete">
+				</form></td>
+
+				<% else 
+					@x=false 
+					@joins.each  do |j| %>
+						<% if j.event_id == e.id %>
+							<%@x=true%>
+						<% end %>
+					<% end %>
+					<% if @x %>
+				<td>
+				Joined |  <form action="/joins/<%=e.id%>" method="post">
+					<input type="hidden" name="_method" value="delete">
+					<input type="hidden" name="authenticity_token" value="<%=form_authenticity_token%>">
+					<input type="submit" value="Cancel">
+				</form></td>
+
+					<% else %>
+						<td>
+						<form action="/joins/<%=e.id%>" method="post">
+						<input type="hidden" name="authenticity_token" value="<%=form_authenticity_token%>">
+						<input type="hidden" name="id" value="<%=e.id%>">
+						<input type="submit" value="Join">
+						</form>
+						</td>
+					<% end %>
+				<% end %>
+			  </tr>
+		<% end %>
+	<% end %>
+		</tbody>
+	</table>
+	<hr>
+	<h4>Here are some of the events in other states:</h4>
+	<table class="table class table-bordered table-striped table-hovered table-hover">
+		<thead>
+
+			<tr>
+				<th>Name</th>
+				<th>Date</th>
+				<th>Location</th>
+				<th>State</th>
+				<th>Host</th>
+				<th>Action/Status</th>
+			</tr>
+		</thead>
+		<tbody>
+<% @events.each do |e| %>
+			<tr>
+			<% if e.state != current_user.state %>
+				<td><a href="/events/<%=e.id %>"><%=e.name %></td>
+				<td><%=e.timing.strftime("%m/%d/%Y")%></td>
+				<td><%=e.location%></td>
+				<td><%= e.state %></td>
+				<td><%=e.user.first_name%></td>
+			<% if e.user.id == current_user.id %>
+				<td><a href="/events/<%=e.id%>/edit">Edit</a> | <form action="/events/<%=e.id%>" method="post">
+					<input type="hidden" name="_method" value="delete">
+					<input type="hidden" name="authenticity_token" value="<%=form_authenticity_token%>">
+					<input type="submit" value="Delete">
+				</form></td>
+				<% else 
+					@y=false 
+					@joins.each  do |j| %>
+						<% if j.event_id == e.id %>
+							<%@y=true%>
+						<% end %>
+					<% end %>
+					<% if @y %>
+				<td>Joined | <form action="/joins/<%=e.id%>" method="post">
+					<input type="hidden" name="_method" value="delete">
+					<input type="hidden" name="authenticity_token" value="<%=form_authenticity_token%>">
+					<input type="submit" value="Cancel">
+				</form></td>
+					<% else%>
+						<td>
+						<form action="/joins/<%=e.id%>" method="post">
+						<input type="hidden" name="authenticity_token" value="<%=form_authenticity_token%>">
+						<input type="submit" value="Join">
+						</form>
+						</td>
+					<% end %>
+				<% end %>
+				</tr>
+			<% end %>
+		<% end %>
+	</tbody>
+</table>
+	<hr>
+<h4>Add Event:</h4>
+<% if flash[:error1] -%>
+  <p class='error'><%=h flash[:error1] %></p>
+<% end %>
+	<form action="/events" method="post">
+		<input type="hidden" name="id" value="<%=current_user.id%>">
+		<input type="hidden" name="authenticity_token" value="<%=form_authenticity_token%>">
+		Name:<input type="text" name="name">
+		<br>
+		Date:<input type="date" name="timing">
+		<br>
+		Location:<input type="text" name="location">
+		<select name="state" id="">
+			<option value="<%=current_user.state%>"><%=current_user.state%></option>
+			<% if current_user.state == "CA" %>
+			<option value="WA">WA</option>
+			<option value="AZ">AZ</option>
+			<% elsif current_user.state == "WA"%>
+			<option value="CA">CA</option>
+			<option value="AZ">AZ</option>
+			<% elsif current_user.state == "AZ" %>
+			<option value="WA">WA</option>
+			<option value="CA">CA</option>
+			<% end %>
+		</select>
+		<input type="submit" value="Add Event">
+	</form>
+</body>
+</div>
+</html>

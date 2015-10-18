@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title></title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container">
+<h3>Register</h3>
+<% if flash[:error] -%>
+  <p class='error'><%=h flash[:error] %></p>
+<% end %>
+	<form action="/users" method="post">
+	<input type="hidden" name="authenticity_token" value="<%=form_authenticity_token%>">
+		First Name<input type="text" name="first_name">
+		<br>
+		Last Name<input type="text" name="last_name">
+		<br>
+		Email<input type="email" name="email">
+		<br>
+		Password<input type="password" name="password">
+		<br>
+		Confirm Password<input type="password" name="password_confirmation">
+		<br>
+		Location<input type="text" name="location">
+		<br>
+		State<select name="state" id="">
+			<option value="CA">CA</option>
+			<option value="WA">WA</option>
+			<option value="AZ">AZ</option>
+		</select> 
+		<br>
+		<input type="submit" value="Register">
+	</form>
+</div>
+</body>
+</html>

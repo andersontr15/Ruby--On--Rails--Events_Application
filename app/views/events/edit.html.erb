@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>Editing Event</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container">
+<a href="/events">Back to Dashboard</a>
+<h3>Editing Event</h3>
+
+	<form action="/events/<%=@event.id%>" method="post">
+		<input type="hidden" name="_method" value="patch">
+		<input type="hidden" name="authenticity_token" value="<%=form_authenticity_token%>">
+		Name:<input type="text" name="name" value="<%=@event.name%>">
+		<br>
+		Location:<input type="text" name="location" value="<%=@event.location%>">
+		<select name="state">
+			<option value="<%=current_user.state%>"><%=current_user.state%></option>
+			<% if current_user.state == "CA" %>
+			<option value="WA">WA</option>
+			<option value="AZ">AZ</option>
+			<% elsif current_user.state == "WA"%>
+			<option value="CA">CA</option>
+			<option value="AZ">AZ</option>
+			<% elsif current_user.state == "AZ" %>
+			<option value="WA">WA</option>
+			<option value="CA">CA</option>
+			<% end %>
+		</select>
+		<br>
+		Timing:<input type="date" name="timing" value="<%=@event.timing %>">
+		<br>
+		<input type="submit" value="Update">
+	</form>
+</div>	
+</body>
+</html>
