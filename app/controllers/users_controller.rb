@@ -1,6 +1,4 @@
 class UsersController < ApplicationController
-	before_action :require_login, except: [:new, :create, :show, :edit, :update, :delete]
-	before_action :require_correct_user, only: [:show, :edit, :update, :delete]
 	def new
 		
 	end
