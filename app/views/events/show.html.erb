@@ -65,12 +65,13 @@ People Joining the event: <%= @joins.count %>
 <% end %>
 </div>
  
-<form action="/comments" method="post">
+<form action="/comments" method="post" class="form-control" style="width:300px; height:100px">
 	<input type="hidden" name="authenticity_token" value="<%=form_authenticity_token%>">
 	<input type="hidden" name="id" value="<%=@event.id%>">
 	<input type="hidden" name="name" value="<%=@event.user.first_name %>">
-	<input type="text" name="comment">
-	<input type="submit" value="Add Comment">
+	<input type="text" name="comment" class="form-control" required minlength=2 placeholder="Your comment here..">
+	<br>
+	<input type="submit" value="Add Comment" class="btn btn-success">
 </form>
 </body>
 </div>

@@ -8,32 +8,31 @@
 </head>
 <body>
 <div class="container">
-<h3>Register</h3>
-<% if flash[:error] -%>
+<h1><center>Ruby on Rails Events Application</center></h1>
+<center><% if flash[:error] -%>
   <p class='error'><%=h flash[:error] %></p>
 <% end %>
-	<form action="/users" method="post">
+</center>
+<center>
+	<form action="/users" method="post" class="form-control" style="width:300px; height:500px">
+	<fieldset><legend>Register</legend></fieldset>
 	<input type="hidden" name="authenticity_token" value="<%=form_authenticity_token%>">
-		First Name<input type="text" name="first_name">
-		<br>
-		Last Name<input type="text" name="last_name">
-		<br>
-		Email<input type="email" name="email">
-		<br>
-		Password<input type="password" name="password">
-		<br>
-		Confirm Password<input type="password" name="password_confirmation">
-		<br>
-		Location<input type="text" name="location">
-		<br>
-		State<select name="state" id="">
+		First Name<input type="text" name="first_name" class="form-control">
+		Last Name<input type="text" name="last_name" class="form-control">
+		Email<input type="email" name="email" class="form-control">
+		Password<input type="password" name="password" class="form-control">
+		Confirm Password<input type="password" name="password_confirmation" class="form-control">
+		Location<input type="text" name="location" class="form-control">
+		State<select name="state" id="" class="form-control">
 			<option value="CA">CA</option>
 			<option value="WA">WA</option>
 			<option value="AZ">AZ</option>
 		</select> 
 		<br>
-		<input type="submit" value="Register">
+		<input type="submit" value="Register" class="btn btn-danger">
 	</form>
+	<a href="/sessions/new"><button class="btn btn-link">Already a member?</button></a>
+</center>
 </div>
 </body>
 </html>

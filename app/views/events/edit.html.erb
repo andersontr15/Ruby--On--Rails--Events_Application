@@ -11,13 +11,14 @@
 <a href="/events">Back to Dashboard</a>
 <h3>Editing Event</h3>
 
-	<form action="/events/<%=@event.id%>" method="post">
+	<form action="/events/<%=@event.id%>" method="post" class="form-control" style="width:300px;height:320px">
 		<input type="hidden" name="_method" value="patch">
 		<input type="hidden" name="authenticity_token" value="<%=form_authenticity_token%>">
-		Name:<input type="text" name="name" value="<%=@event.name%>">
+		Name:<input type="text" name="name" value="<%=@event.name%>" class="form-control">
 		<br>
-		Location:<input type="text" name="location" value="<%=@event.location%>">
-		<select name="state">
+		Location:<input type="text" name="location" value="<%=@event.location%>" class="form-control">
+		<br>
+		<select name="state" class="form-control">
 			<option value="<%=current_user.state%>"><%=current_user.state%></option>
 			<% if current_user.state == "CA" %>
 			<option value="WA">WA</option>
@@ -31,9 +32,9 @@
 			<% end %>
 		</select>
 		<br>
-		Timing:<input type="date" name="timing" value="<%=@event.timing %>">
+		Timing:<input type="date" name="timing" value="<%=@event.timing %>" class="form-control">
 		<br>
-		<input type="submit" value="Update">
+		<input type="submit" value="Update" class="btn btn-danger">
 	</form>
 </div>	
 </body>

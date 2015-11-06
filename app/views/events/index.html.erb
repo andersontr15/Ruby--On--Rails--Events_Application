@@ -143,15 +143,16 @@
 <% if flash[:error1] -%>
   <p class='error'><%=h flash[:error1] %></p>
 <% end %>
-	<form action="/events" method="post">
+	<form action="/events" method="post" class="form-control" style="width:400px;height:320px">
 		<input type="hidden" name="id" value="<%=current_user.id%>">
 		<input type="hidden" name="authenticity_token" value="<%=form_authenticity_token%>">
-		Name:<input type="text" name="name">
+		Name:<input type="text" name="name" class="form-control">
 		<br>
-		Date:<input type="date" name="timing">
+		Date:<input type="date" name="timing" class="form-control">
 		<br>
-		Location:<input type="text" name="location">
-		<select name="state" id="">
+		Location:<input type="text" name="location" class="form-control" placeholder="Your city..">
+		<br>
+		<select name="state" id="" class="form-control">
 			<option value="<%=current_user.state%>"><%=current_user.state%></option>
 			<% if current_user.state == "CA" %>
 			<option value="WA">WA</option>
@@ -164,7 +165,8 @@
 			<option value="CA">CA</option>
 			<% end %>
 		</select>
-		<input type="submit" value="Add Event">
+		<br>
+		<input type="submit" value="Add Event" class="btn btn-success">
 	</form>
 </body>
 </div>

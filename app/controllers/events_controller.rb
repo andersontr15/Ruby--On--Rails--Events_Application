@@ -10,7 +10,7 @@ class EventsController < ApplicationController
 
 	def create
 		user = User.find(current_user.id)
-		user.events.new(name: params[:name], timing: params[:timing], location: params[:location], state: params[:state])
+		user.events.create(name: params[:name], timing: params[:timing], location: params[:location], state: params[:state])
 		if params[:timing] < Date.today.to_s	
 		flash[:error1] = "Must add event for current or future date"	
 			redirect_to "/events"
