@@ -30,7 +30,7 @@
 <h4>Here are some of the events in your state:</h4>
 	<table class="table class table-bordered table-striped table-hovered table-hover">
 		<thead>
-			<tr>
+			<tr class="active">
 				<th>Name</th>
 				<th>Date</th>
 				<th>Location</th>
@@ -92,7 +92,7 @@
 	<table class="table class table-bordered table-striped table-hovered table-hover">
 		<thead>
 
-			<tr>
+			<tr class="active">
 				<th>Name</th>
 				<th>Date</th>
 				<th>Location</th>
@@ -103,7 +103,7 @@
 		</thead>
 		<tbody>
 <% @events.each do |e| %>
-			<tr>
+			<tr class="active">
 			<% if e.state != current_user.state %>
 				<td><a href="/events/<%=e.id %>"><%=e.name %></td>
 				<td><%=e.timing.strftime("%m/%d/%Y")%></td>
