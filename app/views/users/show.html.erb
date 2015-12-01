@@ -33,13 +33,13 @@
 </div>
 <hr>
 <div class="container">
-<br>
-<div class="panel panel-primary">
+	<br>
+	<div class="panel panel-primary">
             <div class="panel-heading">
                 <h3 class="panel-title">Editing <%=current_user.first_name%>'s Profile </h3>
             </div>
         </div>
-<hr>
+	<hr>
 	<form action="/users/<%=current_user.id%>" method="post" class="form-control" style="width:300px;height:420px">
 		<input type="hidden" name="_method" value="patch">
 		<input type="hidden" name="authenticity_token" value="<%=form_authenticity_token%>">
@@ -67,6 +67,6 @@
 		<br>
 		<input type="submit" value="Update" class="btn btn-success">
 	</form>
-	</div>
+</div>
 </body>
 </html>

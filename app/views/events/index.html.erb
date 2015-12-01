@@ -61,9 +61,7 @@
 		<% @events.each do |e| %>
 			<% if e.state == current_user.state %>
 				<td>
-				
 				<a href="/events/<%=e.id %>"><%=e.name %></td>
-
 				<td><%=e.timing.strftime("%m/%d/%Y")%></td>
 				<td><%=e.location%></td>
 				<td><%= e.state %></td>
@@ -88,7 +86,6 @@
 					<input type="hidden" name="authenticity_token" value="<%=form_authenticity_token%>">
 					<input type="submit" value="Cancel" class="btn btn-danger">
 				</form></td>
-
 					<% else %>
 						<td>
 						<form action="/joins/<%=e.id%>" method="post">
@@ -114,7 +111,6 @@
 	<div class="table-responsive">
 	<table class="table class table-bordered table-striped table-hovered table-hover">
 		<thead>
-
 			<tr class="info">
 				<th>Name</th>
 				<th>Date</th>
@@ -173,7 +169,6 @@
                 <h3 class="panel-title">Add Event</h3>
             </div>
         </div>
-
 <% if flash[:error1] -%>
   <p class='error'><%=h flash[:error1] %></p>
 <% end %>

@@ -8,6 +8,7 @@ class UsersController < ApplicationController
 		if user.password == user.password_confirmation
 			user.save
 			redirect_to "/sessions/new"
+			flash[:success] = "You are now registered and may login."
 		else
 		flash[:error] = "Must fill out all fields and password fields must match"
 		redirect_to "/users/new"

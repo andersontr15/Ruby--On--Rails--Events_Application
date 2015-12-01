@@ -28,11 +28,13 @@
 <hr>
 <hr>
 <div class="container">
-<center><% if flash[:error] -%>
-  <p class='error'><%=h flash[:error] %></p>
-<% end %>
-</center>
-<center>
+	<center><% if flash[:error] -%>
+	<div class="alert alert-danger" role="alert">
+	  	<p class='alert-link'><%= flash[:error] %></p>
+	  	</div>
+	<% end %>
+	</center>
+	<center>
 	<form action="/users" method="post" class="form-control" style="width:300px; height:500px">
 	<fieldset><legend>Register</legend></fieldset>
 	<input type="hidden" name="authenticity_token" value="<%=form_authenticity_token%>">
@@ -51,7 +53,7 @@
 		<input type="submit" value="Register" class="btn btn-success">
 	</form>
 	<br>
-</center>
+	</center>
 </div>
 </body>
 </html>

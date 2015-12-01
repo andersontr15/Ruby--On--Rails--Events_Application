@@ -2,7 +2,6 @@ class CommentsController < ApplicationController
 	before_action :require_login, only: [:new, :create, :show, :edit, :update, :delete]
 	before_action :require_correct_user, only: [:show, :edit, :update, :delete]
 	def index
-
 	end
 
 	def create

@@ -27,9 +27,16 @@
 </div>
 <hr><hr>
 	<div class="container">
-	<% if flash[:error2] -%>
-	  <p class='error'><%=h flash[:error2] %></p>
-	<% end %>
+		<% if flash[:error2] -%>
+		<div class="alert alert-danger" role="alert">
+	  	<p class='alert-link'><%= flash[:error2] %></p>
+	  	</div>
+		<% end %>
+		<% if flash[:success] -%>
+		<div class="alert alert-success" role="alert">
+	  	<p class='alert-link'><%= flash[:success] %></p>
+	  	</div>
+		<% end %>
 		<form action="/sessions" method="post" class="form-control" style="width:300px;height:225px">
 		<fieldset><legend>Login</legend></fieldset>
 			<input type="hidden" name="authenticity_token" value="<%=form_authenticity_token%>">

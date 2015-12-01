@@ -5,7 +5,6 @@ class EventsController < ApplicationController
 		@events = Event.all
 		@user = current_user
 		@joins = Join.where(user: @user)
-
 	end
 
 	def create
