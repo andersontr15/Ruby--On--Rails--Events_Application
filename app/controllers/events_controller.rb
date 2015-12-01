@@ -1,6 +1,6 @@
 class EventsController < ApplicationController
 	before_action :require_login, only: [:new, :create, :show, :edit, :update, :delete]
-	before_action :require_correct_user, only: [:show, :edit, :update, :delete]
+	before_action :require_correct_event_user, only: [:edit, :update, :delete]
 
 	def index
 		@events = Event.all
