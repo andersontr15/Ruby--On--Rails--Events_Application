@@ -5,6 +5,7 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<title></title>
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha256-KXn5puMvxCw+dAYznun+drMdG1IFl3agK0p/pqT9KAo= sha512-2e8qq0ETcfWRI4HJBzQiA3UoyFk6tbNyG+qSaIBZLyW9Xf3sWZHN/lxe9fTh1U45DpPf07yj94KsUHHWe4Yk1A==" crossorigin="anonymous"></script>
 	<style>
 	div.messages{
 		height: 300px;
@@ -14,39 +15,54 @@
 		background-color:white;
 		color:black;
 	}
-	body{
-		background-image: url("https://upload.wikimedia.org/wikipedia/commons/thumb/d/d1/Mount_Everest_as_seen_from_Drukair2_PLW_edit.jpg/1280px-Mount_Everest_as_seen_from_Drukair2_PLW_edit.jpg");
-		color:black;
-	}
 	</style>
 </head>
 <body>
-<div class="container">
-<a href="/events">User Dashboard</a>
-<span>|</span>
-<% if current_user.id == @event.user.id %>
-  <td><a href="/events/<%=@event.id%>/edit">Edit</a></td>
-<% if current_user %>
-<form action='/sessions' method='post'>
-    <input type='hidden' name='authenticity_token' value='<%= form_authenticity_token %>'>
-    <input type='hidden' name='_method' value='delete'>
-    <input type='submit' value='Log Out'>
-  </form>
-<% end %>
-<% end %>
+<div class="navbar navbar-inverse navbar-fixed-top" role="navigation" style="padding-top:-370px;">
+  <div class="container">
+    <div class="navbar-header"> 
+    	<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+    		<span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+    	</button>
+    	<a class="navbar-brand" id="t"><% if current_user %>
+				<form action='/sessions' method='post'>
+    			<input type='hidden' name='authenticity_token' value='<%= form_authenticity_token %>'>
+    			<input type='hidden' name='_method' value='delete'>
+    			<input type='submit' value='Log Out' class="btn btn-link" style="font-size:18px;">
+  				</form>
+			<% end %></a>
+    </div>
+    <div class="navbar-collapse collapse">
+    	<ul class="nav navbar-nav navbar-right">
+    		<li class="active"><a href="/events">User Dashboard</a></li>
+            <li><% if current_user.id == @event.user.id %>
+  			<a href="/events/<%=@event.id%>/edit">Edit</a><% end %></li>
+    	</ul>
+    </div>
+  </div>
+</div>
 <hr>
-<h3><%= @event.name %></h3>
-<br>
-Host:<%= @event.user.first_name %>
-<br>
-Date: <%= @event.timing.strftime("%m/%d/%Y") %>
-<br>
-Location: <%= @event.location %>
-<br>
-People Joining the event: <%= @joins.count %>
+<br><br>
+<div class="container">
+<div class="list-group">
+  <a class="list-group-item active">
+   <%= @event.name %>
+  </a>
+  <a class="list-group-item">Host: <%= @event.user.first_name %></a>
+  <a class="list-group-item">Date: <%= @event.timing.strftime("%m/%d/%Y") %></a>
+  <a class="list-group-item">Location: <%= @event.location %></a>
+</div>
+<div class="panel panel-danger">
+            <div class="panel-heading">
+                <h3 class="panel-title">People Joining the event: <%= @joins.count %></h3>
+            </div>
+        </div>
+<div class="table-responsive">
 <table class="table class table-bordered table-striped table-hovered table-hover">
 	<thead>
-		<tr>
+		<tr class="info">
 			<th>Name</th>
 			<th>Location</th>
 			<th>State</th>
@@ -62,15 +78,20 @@ People Joining the event: <%= @joins.count %>
 	</tbody>
 	<% end %>
 </table>
+</div>
 
-<h3>Discussion about this event</h3>
+<div class="panel panel-primary" style="width:300px;">
+            <div class="panel-heading">
+                <h3 class="panel-title">Discussion about this event</h3>
+            </div>
+        </div>
+
 <div class="messages">
 <%@comments.each do |c| %>
 	<%= c.created_at.strftime("%m/%d/%Y") %> -- <%= c.user.first_name%> says: <%= c.comment %> 
 	<br>
 <% end %>
 </div>
- 
 <form action="/comments" method="post" class="form-control" style="width:300px; height:100px">
 	<input type="hidden" name="authenticity_token" value="<%=form_authenticity_token%>">
 	<input type="hidden" name="id" value="<%=@event.id%>">
@@ -79,6 +100,6 @@ People Joining the event: <%= @joins.count %>
 	<br>
 	<input type="submit" value="Add Comment" class="btn btn-success">
 </form>
-</body>
 </div>
+</body>
 </html>
